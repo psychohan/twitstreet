@@ -27,8 +27,8 @@ if(sessionUser != null){
 %>
 
 <div id="dashboard">
-	<h3>Dasboard</h3>
-	<div id="quoteholder">
+	<h3>Dashboard</h3>
+	<div class="well" id="quoteholder">
 	    <%
 	    	String quote = request.getSession().getAttribute(StockQuoteServlet.QUOTE) == null ? "" : (String)request.getSession().getAttribute(StockQuoteServlet.QUOTE); 
 	    	Stock stock = null;
@@ -36,8 +36,8 @@ if(sessionUser != null){
 	    			stock = stockMgr.getStock(quote);
 	    	}
 	    %>
-		<input type="text" class="textbox" id="quote" value="<%=quote%>" />
-		<button class="button" onclick="getquote();" id="getquotebutton">Get quote</button>
+		<input type="text" class="xlInput" size="30" id="quote" value="<%=quote%>" />
+		<button class="btn small primary" onclick="getquote();" id="getquotebutton">Get quote</button>
 		<input type="hidden" id="quote-hidden" value="<%=quote%>" />
 		<input type="hidden" id="quote-id" value="<%=stock == null ? "" : stock.getId()%>"/>
 	</div>

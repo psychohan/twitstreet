@@ -13,7 +13,8 @@ ConfigMgr configMgr = inj.getInstance(ConfigMgr.class);
 <script language="javascript" type="text/javascript">
 
 </script>
-<link rel="stylesheet" type="text/css" href="/css/cssreset-min.css" />
+
+<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="/css/twitstreet.css" />
 
 <script type="text/javascript">
