@@ -11,7 +11,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
-import com.twitstreet.market.StockMgrImpl;
 import com.twitstreet.servlet.BalanceServlet;
 import com.twitstreet.servlet.BuyServlet;
 import com.twitstreet.servlet.CallBackServlet;
@@ -20,10 +19,11 @@ import com.twitstreet.servlet.PortfolioServlet;
 import com.twitstreet.servlet.SellServlet;
 import com.twitstreet.servlet.SetupServlet;
 import com.twitstreet.servlet.SigninServlet;
-import com.twitstreet.servlet.SignoutServlet;
+import com.twitstreet.servlet.StockDetailsServlet;
 import com.twitstreet.servlet.StockQuoteServlet;
 import com.twitstreet.servlet.TopRankServlet;
 import com.twitstreet.servlet.TransactionServlet;
+import com.twitstreet.servlet.UserProfileServlet;
 
 
 public class TSServletConfig extends GuiceServletContextListener {
@@ -59,10 +59,8 @@ public class TSServletConfig extends GuiceServletContextListener {
 			protected void configureServlets() {
 				serve("/").with(HomePageServlet.class);
 				serve("/signin").with(SigninServlet.class);
-				serve("/signout").with(SignoutServlet.class);
 				serve("/callback").with(CallBackServlet.class);
 				serve("/setup").with(SetupServlet.class);
-
 				serve("/getquote").with(StockQuoteServlet.class);
 				serve("/a/buy").with(BuyServlet.class);
 				serve("/a/sell").with(SellServlet.class);
@@ -70,6 +68,8 @@ public class TSServletConfig extends GuiceServletContextListener {
 				serve("/portfolio").with(PortfolioServlet.class);
 				serve("/transaction").with(TransactionServlet.class);
 				serve("/balance").with(BalanceServlet.class);
+				serve("/stock").with(StockDetailsServlet.class);
+				serve("/user").with(UserProfileServlet.class);
 			}
 		});
 	}

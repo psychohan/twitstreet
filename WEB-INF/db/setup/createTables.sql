@@ -6,8 +6,7 @@ create table `users`(
 	`userName` varchar(45) not null,
 	`firstLogin` datetime not null,
 	`lastLogin` datetime not null,
-	`cash` int not null default 10000,
-	`portfolio` int not null default 0,
+	`cash` double not null default 10000,
 	`lastIp` varchar(45) not null,
 	`oauthToken` varchar(100) not null,
 	`oauthTokenSecret` varchar(100) not null,
@@ -28,12 +27,11 @@ create table `admin`(
 	 primary key (`id`)
 )  engine=innodb default charset=`utf8`;
 
--- admin table
+-- stock table
 create table `stock`(
 	`id` bigint not null auto_increment,
 	`name` varchar(45) not null,
 	`total` int not null,
-	`sold` double not null,
 	`pictureUrl` varchar(255),
 	`lastUpdate` timestamp,
 	 primary key (`id`)
@@ -61,16 +59,27 @@ create table `config`(
 	 primary key (`id`)
 )  engine=innodb default charset=`utf8`;
 
--- saves transaction log
+-- transactions table
 create  table `transactions` (
   `id` bigint not null auto_increment,
   `user_id` bigint null,
   `stock` bigint null,
-  `amount` int null,
+  `amount` double null,
   `t_action` tinyint null,
   `t_date` timestamp,
   primary key (`id`) );
 
+-- stock_history table
+create  table `stock_history` (
+	`id` bigint not null auto_increment,
+	`stock` bigint not null,
+	`name` varchar(45) not null,
+	`total` int not null,
+	`day` varchar(10),
+	`stockLastUpdate` timestamp,
+	 primary key (`id`),
+	 unique key `unique_daily_stock` (`stock`, `day`)
+)  engine=innodb default charset=`utf8`;
 
 
 

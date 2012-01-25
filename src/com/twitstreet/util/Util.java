@@ -3,6 +3,10 @@ package com.twitstreet.util;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
+import javax.swing.text.NumberFormatter;
 
 public class Util {
 
@@ -57,19 +61,14 @@ public class Util {
 
 		return argBuf.toString();
 	}
-
-	public static String commaSep(String amount) {
-		String commaAmount = "";
-		int remaining = amount.length() % 3 == 0 ? 3 : amount.length() % 3;
-		commaAmount = amount.substring(0, remaining);
-		for (int i = remaining; i < amount.length(); i = i + 3) {
-			commaAmount = commaAmount + "," + amount.substring(i, i + 3);
-
-		}
-		return commaAmount;
+	
+	public static String commaSep(double amount) {
+		DecimalFormat decimalFormatter = new DecimalFormat("#,###,###.00");
+		return decimalFormatter.format(amount);
 	}
 	
 	public static String commaSep(int amount) {
-		return commaSep(String.valueOf(amount));
+		DecimalFormat decimalFormatter = new DecimalFormat("#,###,###");
+		return decimalFormatter.format(amount);
 	}
 }

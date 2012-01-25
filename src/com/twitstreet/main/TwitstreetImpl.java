@@ -11,19 +11,27 @@ import javax.servlet.ServletContext;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import com.twitstreet.cache.TransactionCache;
 import com.twitstreet.config.ConfigMgr;
 import com.twitstreet.db.base.DBMgr;
 import com.twitstreet.servlet.HomePageServlet;
+import com.twitstreet.task.AsyncQuery;
+import com.twitstreet.task.AsyncQueryTask;
+import com.twitstreet.task.ReRankTask;
+import com.twitstreet.task.StockHistoryUpdateTask;
+import com.twitstreet.task.StockUpdateTask;
 
 
 @Singleton
 public class TwitstreetImpl implements Twitstreet {
 	private boolean initialized = false;
-	@Inject HomePageServlet homePageServlet;
 	DBMgr dbMgr;
 	ConfigMgr configMgr;
 	ServletContext servletContext;
 	Injector injector;
+	@Inject AsyncQuery asyncQueryTask;
+	@Inject TransactionCache transactionCache;
+	
 	@Inject public TwitstreetImpl(DBMgr dbMgr, ConfigMgr configMgr){
 		this.dbMgr = dbMgr;
 		this.configMgr = configMgr;
@@ -56,6 +64,8 @@ public class TwitstreetImpl implements Twitstreet {
 		
 		ReRankTask reRankTask = injector.getInstance(ReRankTask.class);
 		StockUpdateTask updateFollowerCountTask = injector.getInstance(StockUpdateTask.class);
+		//AsyncQueryTask asyncQueryTask = injector.getInstance(AsyncQueryTask.class);
+		StockHistoryUpdateTask stockHistoryUpdateTask = injector.getInstance(StockHistoryUpdateTask.class);
 		
 		Thread reRankThread = new Thread(reRankTask);
 		reRankThread.setName("Re-Rank");
@@ -64,7 +74,17 @@ public class TwitstreetImpl implements Twitstreet {
 		Thread updateFollowerCountThread = new Thread (updateFollowerCountTask);
 		updateFollowerCountThread.setName("Update Follower Count");
 		updateFollowerCountThread.start();
-
+		
+		Thread asyncQueryTaskThread = new Thread(asyncQueryTask);
+		asyncQueryTaskThread.setName("Async query task");
+		asyncQueryTaskThread.start();
+		
+		Thread stockHistoryUpdateThread = new Thread (stockHistoryUpdateTask);
+		stockHistoryUpdateThread.setName("Update Stock History");
+		//stockHistoryUpdateThread.start();
+		
+		transactionCache.load();
+		
 		initialized = true;
 	}
 	public boolean isInitialized(){
