@@ -29,7 +29,6 @@
 %>
 
 <div id="dashboard">
-<<<<<<< HEAD
 	<h3>Dashboard</h3>
 	<div class="well" id="quoteholder">
 	    <%
@@ -43,28 +42,6 @@
 		<button class="btn small primary" onclick="getquote();" id="getquotebutton">Get quote</button>
 		<input type="hidden" id="quote-hidden" value="<%=quote%>" />
 		<input type="hidden" id="quote-id" value="<%=stock == null ? "" : stock.getId()%>"/>
-=======
-	<h3>Dasboard</h3>
-	<div id="quoteholder">
-		<%
-			String quote = request.getSession().getAttribute(
-					StockQuoteServlet.QUOTE) == null ? "" : (String) request
-					.getSession().getAttribute(StockQuoteServlet.QUOTE);
-			Stock stock = null;
-			if (quote.length() > 0) {
-				stock = (Stock) request.getAttribute(StockQuoteServlet.QUOTE);
-				if (stock == null) {
-					stock = stockMgr.getStock(quote);
-				}
-			}
-		%>
-		<input type="text" class="textbox" id="quote" value="<%=quote%>" />
-		<button class="button" onclick="getquote();" id="getquotebutton">Get
-			quote</button>
-		<input type="hidden" id="quote-hidden" value="<%=quote%>" /> <input
-			type="hidden" id="quote-id"
-			value="<%=stock == null ? "" : stock.getId()%>" />
->>>>>>> master
 	</div>
 	<div id="userfound"
 		<%if (stock != null && quote.length() > 0 && stock.getTotal() > 0) {
